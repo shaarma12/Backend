@@ -8,7 +8,8 @@ const asyncHandler = (requestHandler) => {
 
 export { asyncHandler };
 
-
+// this is second way to use that wrapper function
+    
 // const asyncHandler = (fn) => {
 //     async (req,res,next) => {
 //         try {
