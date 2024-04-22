@@ -9,7 +9,7 @@ const userSchema = new Schema({
         unique: true,
         lowercase: true,
         trim: true,
-        index:true
+        index:true // index is used for searching purpose.
     },
     email: {
         type: String,
@@ -47,10 +47,11 @@ const userSchema = new Schema({
 
 }, { timeStamps: true });
 
-//  pre hook
+//  pre hook - save so it is useful when we need to any action before saving of data in database so here that we are doing we are encrypt the password before saving the database we are doing encryption by the use bcrypt package.
+
 userSchema.pre("save", async function (next) {
     if (!this.isModified("password")) return next();
-    this.password = bcrypt.hash(this.password, 10);
+    this.password = bcrypt.hash(this.password, 10); // for encryption of password
     next();
 });
 
