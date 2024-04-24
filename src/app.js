@@ -24,5 +24,8 @@ app.use(express.static("public"));
 // this is used for server can access the browser cookies and change it .
 app.use(cookieParser());
 
+import userRoutes from "./routes/user.routes.js";
+
+app.use("/api/v1/user", userRoutes);
 
 export { app };
