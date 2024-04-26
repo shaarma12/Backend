@@ -4,7 +4,7 @@ import { app } from "./app.js";
 import { Data } from "./constant.js";
 
 dotenv.config({
-    path:"./env"
+    path:"./.env"
 })
 
 connectDB().then(() => {

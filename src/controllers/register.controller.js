@@ -15,14 +15,14 @@ const registerUser = asyncHandler(async (req, res) => {
     // return response
 
     
-    const { username, email, fullName} = req.body;
+    const { username, email, fullName,password} = req.body;
     
     // console.log("username", username);
     // console.log("email", email);
     // console.log("fullName", fullName);
     
     // validation for data fields is not empty 
-    if ([username, email, fullName].some((value) => value?.trim() === ""))
+    if ([username, email, fullName,password].some((value) => value?.trim() === ""))
     {
         throw new ApiError(400, "Getting Error!!");
     }
@@ -36,14 +36,23 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new ApiError(409, "User with email or username already exists");
     }
     
-    // for coverImage and avatar 
-    const avatarLocalPath = req.files?.avatar[0].path;
-    const coverImagePath = req.files?.coverImage[0].path;
+    let avatarLocalPath,coverImagePath;
+
+    if (req.files && Array.isArray(req.files.avatar) && req.files.avatar.length > 0)
+    {
+        avatarLocalPath = req.files.avatar[0].path;   
+    }
+
+    if (req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0)
+    {
+        coverImagePath = req.files?.coverImage[0].path;
+    }
     
     if (!avatarLocalPath) {
         throw new ApiError(400, "Avatar file is required");
     }
     
+    // upload avatar and coverImage on cloudinary
     const avatar = await uploadonCloudinary(avatarLocalPath);
     const coverImage = await uploadonCloudinary(coverImagePath);
 
